@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.Stack;
 
 public class BST {
 	private static BNode root=null;
@@ -10,16 +11,41 @@ public class BST {
 		while(scanner.hasNext()){
 			bst.insert(scanner.nextInt());
 		}
-		bst.print(root);
+		bst.print2(root);
 
 	}
-	//中序遍历二叉树(打印)
+	//中序遍历二叉树(递归打印)
 	public void print(BNode T){
 		if(T!=null){
 			print(T.getLc());
 			System.out.println(T.getData());
 			print(T.getRc());
 		}
+	}
+	
+	//中序遍历二叉树(非递归打印)
+	public void print2(BNode T){
+		BNode p=T;
+		//借助Stack
+		Stack stack=new Stack<Integer>();
+		while(p!=null||stack.size()>=1){
+			//如果当前节点不位null，则进栈，然后向左走
+			if(p!=null){
+				stack.push(p);
+				//向左走
+				p=p.getLc();
+			}
+			//如果当前节点为null，则出栈，然后访问，然后向右走
+			if(p==null){
+				p=(BNode)stack.pop();
+				System.out.print(p.getData()+" ");
+				//向右走
+				p=p.getRc();
+			}
+		}
+		
+		
+		
 	}
 	
 	//向二叉排序树中插入节点（构造二叉链表）
